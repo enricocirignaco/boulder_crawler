@@ -14,7 +14,6 @@ RUN playwright install
 RUN pip install python-dotenv
 # Add the crawler script to the Docker image
 COPY script.py /app/script.py
-COPY .env /app/.env
 # Set the working directory
 WORKDIR /app
 
