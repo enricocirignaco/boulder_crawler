@@ -43,22 +43,20 @@ def init_crawler():
         else:
             print("Navigation Error")
             restart_script()
-        while True:
-            try:
-                # Loop through the next 4 weeks
-                for i in range(4):
-                    # Crawl the bouldering slots
-                    crawl_buoldering_slots(page)
-
-                    # Navigate to the next week
-                    navigate_to_next_week(page)
-                # Wait for 5 minutes before checking again
-                print("Standby for 5 minutes...")
-                page.wait_for_timeout(300000)
-                # Close the browser
-            except Exception as e:
-                restart_script()
-            finally:
+    
+        try:
+            # Loop through the next 4 weeks
+            for i in range(4):
+                # Crawl the bouldering slots
+                crawl_buoldering_slots(page)
+                # Navigate to the next week
+                navigate_to_next_week(page)
+        except Exception as e:
+            print("An error occurred: ", e)
+            restart_script()
+        finally:
+            # Close the browser only when breaking the loop
+            if browser.is_connected():
                 browser.close()
 ############################################################################
 def navigate_to_next_week(page):
@@ -122,4 +120,7 @@ if __name__ == "__main__":
     print("Boulder Crawler v1.0")
     # Load environment variables from the .env file
     load_dotenv()
-    init_crawler()
+    while True:
+        init_crawler()
+        print("Standby for 5 minutes...")
+        time.sleep(300)
