@@ -75,7 +75,7 @@ def navigate_to_next_week(page):
 def crawl_buoldering_slots(page):
     # Select all calendar entries
     calendar_entries = page.query_selector_all('.cal-entry')
-
+    calendar_entries.reverse()  # This will reverse the list in place
     # Iterate through each entry
     for entry in calendar_entries:
         # Check if the entry contains the text "Bouldern"
